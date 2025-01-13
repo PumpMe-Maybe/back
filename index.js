@@ -17,6 +17,8 @@ app.post("/predict", async (req, res) => {
     blood_glucose_level,
   } = req.body;
 
+  console.log("Request", req.body);
+
   if (
     !gender ||
     !hypertension ||
@@ -28,8 +30,6 @@ app.post("/predict", async (req, res) => {
   ) {
     return res.status(400).json({ error: "Missing required fields" });
   }
-
-  console.log("Request", req.body);
 
   try {
     const { data } = await axios.post(
@@ -47,6 +47,7 @@ app.post("/predict", async (req, res) => {
     res.json(data);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
+    console.error(error);
   }
 });
 
