@@ -21,8 +21,8 @@ app.post("/predict", async (req, res) => {
 
   if (
     !gender ||
-    !hypertension ||
-    !heart_disease ||
+    !req.body.hasOwnProperty("hypertension") ||
+    !req.body.hasOwnProperty("heart_disease") ||
     !age ||
     !bmi ||
     !hba1c_level ||
