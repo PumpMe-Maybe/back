@@ -4,16 +4,9 @@ const axios = require("axios");
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
-// gender: str
-//     hypertension: bool
-//     heart_disease: bool
-//     age: int
-//     bmi: float
-//     hba1c_level: float
-//     blood_glucose_level: int
-
-app.post("/", async (req, res) => {
+app.post("/predict", async (req, res) => {
   const {
     gender,
     hypertension,
@@ -36,11 +29,19 @@ app.post("/", async (req, res) => {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
+  console.log("Request", req.body);
+
   try {
     const { data } = await axios.post(
       "https://back-end-1-cvsl.onrender.com/predict",
       {
-        ...req.body,
+        gender,
+        hypertension,
+        heart_disease,
+        age,
+        bmi,
+        hba1c_level,
+        blood_glucose_level,
       }
     );
     res.json(data);
